@@ -42,6 +42,8 @@ namespace Product_Inventory_Management_System.Controllers
         {
             var model = JsonConvert.DeserializeObject<ProductInformation>(values);
 
+            model.ProductId = Id();
+
             if (model == null)
             {
                 this.ModelState.AddModelError("all", "1 one or more properties malformed");
@@ -93,36 +95,13 @@ namespace Product_Inventory_Management_System.Controllers
             return this.Ok();
         }
 
+        private int Id()
+        {
+            Random random = new Random();
+           
+            int randomNumber = random.Next(10000000);
+            return randomNumber;
+        }
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-        //public IActionResult Privacy()
-        //{
-        //    return View();
-        //}
-
-        //[ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
-        //public IActionResult Error()
-        //{
-        //    return View(new ErrorViewModel { RequestId = Activity.Current?.Id ?? HttpContext.TraceIdentifier });
-        //}
     }
 }

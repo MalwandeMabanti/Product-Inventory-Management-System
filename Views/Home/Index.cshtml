@@ -1,12 +1,4 @@
-﻿@*@{
-    ViewData["Title"] = "Home Page";
-}
-
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://docs.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>*@
-<div id="gridContainer"></div>
+﻿<div id="gridContainer"></div>
 
 @(
 Html.DevExtreme().DataGrid<ProductInformation>()
@@ -50,25 +42,36 @@ Html.DevExtreme().DataGrid<ProductInformation>()
 
     .Columns(columns =>
     {
-        columns.AddFor(_ => _.ProductId);
-
-        columns.AddFor(_ => _.Name);
+        columns.AddFor(_ => _.Name)
+            .Alignment(HorizontalAlignment.Center)
+            .ValidationRules(_ => _.AddStringLength()
+                .Max(100)
+                .Message("Length should be 100 or less")); 
          
-        columns.AddFor(_ => _.Description);
+        columns.AddFor(_ => _.Description)
+            .Alignment(HorizontalAlignment.Center)
+            .ValidationRules(_ => _.AddStringLength()
+                .Max(20)
+                .Message("Length should be 300 or less"));
 
-        columns.AddFor(_ => _.Price);
 
-        columns.AddFor(_ => _.Quantity);
+        columns.AddFor(_ => _.Price)
+            .Alignment(HorizontalAlignment.Center)
+            .ValidationRules(_ => _.AddRequired()
+                .Message("Should be greater than 0"));
+
+        columns.AddFor(_ => _.Quantity)
+            .Alignment(HorizontalAlignment.Center)
+            .ValidationRules(_ => _.AddRequired()
+                .Message("Should be greater than 0"));
     })
 
     .DataSource(_ => _.Mvc()
         .Controller("Home")
         .LoadAction("Get")
-        .InsertAction("Post")
+        .InsertAction("Create")
         .UpdateAction("Update")
         .DeleteAction("Delete")
         .Key("ProductId")
     )
-
-    //.OnEditorPreparing("employeeAddressOnEditorPreparing")
 )

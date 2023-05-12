@@ -14,13 +14,13 @@ namespace Product_Inventory_Management_System.Validators
         private void GeneralRules() 
         {
             this.RuleFor(_ => _.ProductId)
-                .GreaterThan(0);
+                .GreaterThanOrEqualTo(0);
 
             this.RuleFor(_ => _.Name)
                 .MaximumLength(100);
 
             this.RuleFor(_ => _.Description)
-                .MinimumLength(20);
+                .MaximumLength(300);
 
             this.RuleFor(_ => _.Price)
                 .GreaterThan(0);
