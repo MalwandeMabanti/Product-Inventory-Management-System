@@ -1,3 +1,12 @@
+using FluentValidation;
+using Product_Inventory_Management_System.Data;
+using Product_Inventory_Management_System.Interface;
+using Product_Inventory_Management_System.Models;
+using Product_Inventory_Management_System.Service;
+using Product_Inventory_Management_System.Validators;
+
+using Microsoft.EntityFrameworkCore;
+
 namespace Product_Inventory_Management_System
 {
     public class Program
@@ -6,10 +15,29 @@ namespace Product_Inventory_Management_System
         {
             var builder = WebApplication.CreateBuilder(args);
 
+            var configBuilder = new ConfigurationBuilder().AddJsonFile("appsettings.json", optional: true, reloadOnChange: true);
+            var configuration = configBuilder.Build();
+
             // Add services to the container.
+            builder.Services.AddDbContext<ApplicationDbContext>(options => options.UseSqlServer(configuration.GetConnectionString("DefaultConnection")));
+
+            builder.Services.AddControllersWithViews();
+
             builder.Services.AddControllersWithViews().AddJsonOptions(options => options.JsonSerializerOptions.PropertyNamingPolicy = null);
 
+            builder.Services.AddScoped<IProductInformationService, ProductInformationService>();
+
+            builder.Services.AddScoped<IValidator<ProductInformation>, ProductInformationValidator>();
+
             var app = builder.Build();
+
+            // Seed data to the database
+            using (var scope = app.Services.CreateScope())
+            {
+                var services = scope.ServiceProvider;
+
+                SeedData.Initialize(services);
+            }
 
             // Configure the HTTP request pipeline.
             if (!app.Environment.IsDevelopment())
@@ -20,6 +48,7 @@ namespace Product_Inventory_Management_System
             }
 
             app.UseHttpsRedirection();
+
             app.UseStaticFiles();
 
             app.UseRouting();

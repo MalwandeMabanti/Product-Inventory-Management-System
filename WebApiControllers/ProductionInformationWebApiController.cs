@@ -8,12 +8,12 @@ using Product_Inventory_Management_System.Models;
 
 namespace Product_Inventory_Management_System.WebApiControllers
 {
-    public class ProductionInformationWebApi : Controller
+    public class ProductionInformationWebApiController : Controller
     {
         private readonly IProductInformationService productInformationService;
         private readonly IValidator<ProductInformation> validator;
 
-        public ProductionInformationWebApi(IProductInformationService productInformationService, IValidator<ProductInformation> validator)
+        public ProductionInformationWebApiController(IProductInformationService productInformationService, IValidator<ProductInformation> validator)
         {
             this.productInformationService = productInformationService;
             this.validator = validator;
