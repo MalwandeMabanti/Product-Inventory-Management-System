@@ -67,7 +67,7 @@ Html.DevExtreme().DataGrid<ProductInformation>()
     })
 
     .DataSource(_ => _.Mvc()
-        .Controller("Home")
+        .Controller("ProductInformationWebApi")
         .LoadAction("Get")
         .InsertAction("Create")
         .UpdateAction("Update")
