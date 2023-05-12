@@ -7,6 +7,7 @@ namespace Product_Inventory_Management_System.Validators
     {
         public ProductInformationValidator() 
         {
+
             GeneralRules();
         }
 

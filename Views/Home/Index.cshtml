@@ -11,6 +11,21 @@
 @(
 Html.DevExtreme().DataGrid<ProductInformation>()
     .ID("gridContainer")
+    .AllowColumnReordering(true)
+    .RowAlternationEnabled(true)
+    .FilterRow(filterRow => filterRow
+        .Visible(true)
+        .ApplyFilter(GridApplyFilterMode.Auto))
+    .ShowBorders(true)
+    .HoverStateEnabled(true)
+    .Paging(paging => paging.PageSize(10))
+    .Pager(pager =>
+    {
+        pager.Visible(true);
+        pager.DisplayMode(GridPagerDisplayMode.Full);
+        pager.ShowInfo(true);
+        pager.ShowNavigationButtons(true);
+    })
     .ShowBorders(true)
     .Editing(editing =>
     {
