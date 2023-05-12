@@ -17,7 +17,7 @@ namespace Product_Inventory_Management_System.Validators
                 .GreaterThan(0);
 
             this.RuleFor(_ => _.Name)
-                .MaximumLength(20);
+                .MaximumLength(100);
 
             this.RuleFor(_ => _.Description)
                 .MinimumLength(20);
